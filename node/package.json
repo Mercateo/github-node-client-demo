@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "dependencies": {
+    "colors": "^1.1.2",
+    "promise": "^7.1.1",
+    "superagent": "^2.0.0"
+  }
+}
