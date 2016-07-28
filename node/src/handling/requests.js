@@ -5,6 +5,7 @@ const Organization = require('../types/Organization');
 const Repo = require('../types/Repo');
 const Gist = require('../types/Gist');
 const Commit = require('../types/Commit');
+const Branch = require('../types/Branch');
 const Event = require('../types/Event');
 const Subscription = require('../types/Subscription');
 
@@ -123,6 +124,12 @@ const retrieveCommits = (repo, success, failure) => {
         success, failure);
 };
 
+const retrieveBranches = (repo, success, failure) => {
+    let branchesUrl = repo.source.branches_url;
+    retrieve(Branch, branchesUrl.split('{')[0], (r) => repo.branches = r,
+        success, failure);
+};
+
 const retrieveTree = (tree) => {
     return new Promise((resolve, reject) => {
         let result = {};
@@ -176,6 +183,7 @@ module.exports = {
     retrieveGists,
     retrieveSources,
     retrieveCommits,
+    retrieveBranches,
     retrieveTree,
     retrieveEvents,
     retrieveFollowers,

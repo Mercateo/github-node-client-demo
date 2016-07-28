@@ -41,18 +41,6 @@ const onHandleDeveloper = (developer) => {
     mapping.mapDeveloperHandling(developer.type)(module.exports, developer);
 };
 
-const onHandleSubs = (fn, developer, key) => {
-    fn(developer, () => {
-        if (developer[key].length <= 0) {
-            logging.no(key);
-        } else {
-            logging.subAttrs(developer[key]);
-        }
-        prompting.prompt(questions.askRepeat(),
-            (answer) => onHandleRepeat(answer.next, developer));
-    });
-};
-
 const onHandleRepos = (developer) => {
     let reposAvailable = () => {
         if (developer.repos.length <= 0) {
@@ -66,7 +54,9 @@ const onHandleRepos = (developer) => {
                         onHandleDeveloper(developer);
                     } else {
                         let selection = developer.repos.find((repo) => answer.repo === repo.name);
-                        onHandleCommits(developer, selection)
+                        prompting.prompt(questions.askProceedRepo(), (answer) => {
+                            mapping.mapProceedRepo(answer.type, developer, selection, module.exports);
+                        });
                     }
                 });
         }
@@ -113,8 +103,15 @@ const onHandleCommits = (developer, repo) => {
         commitsAvailable();
 };
 
+const onHandleBranches = (developer, repo) => {
+    requests.retrieveBranches(repo, () => {
+        logging.subAttrs(repo.branches);
+        onHandleRepos(developer);
+    });
+};
+
 const onHandleGists = (user) => {
-    const gistsAvailable = () => {
+    let gistsAvailable = () => {
         if (user.gists.length <= 0) {
             console.log(`no gists...\n`);
             onHandleDeveloper(user);
@@ -229,6 +226,7 @@ module.exports = {
     onHandleRepos,
     onHandleGists,
     onHandleCommits,
+    onHandleBranches,
     onHandleEvents,
     onHandleFollowers,
     onHandleFollowing,

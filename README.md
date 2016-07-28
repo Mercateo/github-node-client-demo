@@ -1,8 +1,10 @@
 # github-node-client-demo
 
-> A sample application implemented with three different techniques: (pure) [Node](https://nodejs.org/en/), [Babel](https://babeljs.io/) and [TypeScript](https://www.typescriptlang.org/)
+> A sample application implemented using (pure) [Node.js](https://nodejs.org/en/).
 
-The task of the client is to use the GitHub API to e.g. browse through a user's/organization's repositories etc. by recording user inputs on the command line,
+> This project was used for research purposes (namely getting to know JavaScript/Node.js) and will NOT be published or usable with npm or others. 
+
+The task of the client is to use the GitHub API to e.g. browse through a user's/organization's repositories etc. by recording user inputs on the command line.
 
 In the end, the development process should use modern techniques (generators, arrow functions, ...) and reveal the difficulties in using them.
 
@@ -16,7 +18,6 @@ In the end, the development process should use modern techniques (generators, ar
     - [Arrow Functions](#arrowfunctions)
     - [Promises](#promises)
     - [Generator Functions](#generatorfunctions)
-    - [Functional Programming](#functionalprogramming)
 - [GitHub Authorization](#githubauthorization)
 - [Conclusion](#conclusion)
 
@@ -228,10 +229,58 @@ b is:
 
 ### Arrow Functions
 
+Arrow functions are a smart way to express the functional character of JavaScript. 
+You no longer need the keyword `function` to declare an anonymous function, but you can use it way more intentional:
 
+```
+function addOne(n) {
+    return n + 1; 
+}
+```
+
+...translates to...
+
+```
+const addOne = (n) => n + 1;
+```
+
+
+##### `this` context
+
+Actually, one can use these arrow functions just as normal function. With one exception:
+The scope of the context used within the function itself is different. 
+
+``` 
+var self = this; 
+this.nums.forEach(function (v) { 
+    if (v % 5 === 0) 
+        self.fives.push(v); 
+    });
+```
+...was the only way to access the surrounding context.
+
+Within arrow functions `this` automatically refers to the context declared as `self` in the above example.
+It's called **lexical this**.
+
+```
+this.nums.forEach((v) => { 
+    if (v % 5 === 0) 
+        this.fives.push(v) 
+    });
+```
 
 ### Promises
 
+Promises are a simple way to handle asynchronous tasks.
+A promise takes two parameters/functions:
+
+`resolve`: what happens, when the task runs as expected
+`reject`: what happens, when an error occurs
+
+Normally, you return a Promise like this: `let p = () => new Promise((resolve, reject) => { ... } )`
+To mark the successful ending of the promise, you call within the promises body: `resolve(resolution);`
+To declare what should happen after resolve was called, you use `.then`,
+    which takes the `resolution` as a parameter: `p().then((resolution) => doStuffWithThe(resolution))`
 
 
 ### Generator functions
@@ -290,13 +339,9 @@ async(function* (foo) {
 
 ```
 
-### Functional programming
-
-
-
 # GitHub Authorization
 
-
+{ to be written }
 
 # Conclusion
 

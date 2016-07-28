@@ -95,11 +95,13 @@ const askProceedOrg = () => {
 };
 
 const askProceedRepo = () => {
+    let choices = Object.keys(choicesNextRepo);
+    choices.push(back);
     return {
         type: 'list',
         name: 'type',
         message: 'Want to browse the repo\'s...',
-        choices: Object.keys(choicesNextRepo)
+        choices: choices
     };
 };
 

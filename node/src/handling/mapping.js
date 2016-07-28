@@ -99,9 +99,38 @@ const mapProceedOrganization = (answer, org, callbacks) => {
     }
 };
 
+const mapProceedRepo = (answer, developer, repo, callbacks) => {
+    switch (answer) {
+        case questions.choicesNextRepo.commits:
+            callbacks.onHandleCommits(developer, repo);
+            break;
+        // case questions.choicesNextRepo.issues:
+        //     callbacks.onHandleRepos(developer);
+        //     break;
+        case questions.choicesNextRepo.events:
+            callbacks.onHandleEvents(repo);
+            break;
+        case questions.choicesNextRepo.contributors:
+            callbacks.onHandleMembers(repo);
+            break;
+        case questions.choicesNextRepo.branches:
+            callbacks.onHandleBranches(repo);
+            break;
+        case questions.choicesNextRepo.details:
+            callbacks.onHandleDetails(repo);
+            break;
+        case questions.proceed:
+            repeat(callbacks);
+            break;
+        default:
+            return defaultError;
+    }
+};
+
 module.exports = {
     mapTypeHandling,
     mapDeveloperHandling,
     mapProceedUser,
-    mapProceedOrganization
+    mapProceedOrganization,
+    mapProceedRepo
 };
