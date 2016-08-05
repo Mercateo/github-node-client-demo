@@ -1,7 +1,11 @@
 {
   "private": true,
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "colors": "^1.1.2",
+    "inquirer": "^1.1.2",
     "promise": "^7.1.1",
     "superagent": "^2.0.0"
   }
