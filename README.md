@@ -1,3 +1,5 @@
+This project is unmantained, deprecated and goes into archive with followup removal in 2 years.
+
 # github-node-client-demo
 
 > A sample application implemented using (pure) [Node.js](https://nodejs.org/en/).
